@@ -236,6 +236,16 @@ Route::post('product/search', 'CartController@SearchProduct')->name('product.sea
 // log user
 Route::get('admin/log/user', 'Admin\UserRoleController@LogUser')->name('admin.log.user');
 
+// Reward Admin
+Route::get('admin/voucher', 'Admin\VoucherController@index')->name('admin.voucherList');
+Route::get('admin/voucher/add', 'Admin\VoucherController@CreateVoucher')->name('create.voucher');
+Route::post('admin/voucher/store', 'Admin\VoucherController@StoreVoucher')->name('store.voucher');
+Route::get('admin/voucher/edit/{id}', 'Admin\VoucherController@EditVocuher');
+Route::post('admin/voucher/claim/', 'Admin\VoucherController@ClaimVocuher');
+
+// claim voucher
+
+
 
 
 

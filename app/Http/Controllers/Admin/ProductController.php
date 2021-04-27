@@ -8,6 +8,8 @@ use App\Model\Admin\Product;
 use DB;
 use Image;
 use Carbon\Carbon;
+use Auth;
+use Session;
 
 class ProductController extends Controller
 {
@@ -17,14 +19,17 @@ class ProductController extends Controller
     }
 
     public function index(){
+        $id = Auth::id();
         $product = DB::table('products')
+                   ->join('admins','products.user_id','admins.id')
                    ->join('categories','products.category_id','categories.id')
                    ->join('durations','products.duration_id','durations.id')
                    ->join('brands','products.brand_id','brands.id')
-                   ->select('products.*','categories.category_name','brands.brand_name','durations.time_duration')
+                   ->select('products.*','admins.name','categories.category_name','brands.brand_name','durations.time_duration')
+                   ->where('user_id',$id)
                    ->get();
-                    //dd($product);
-                //    return response()->json($product);
+                    // dd($product);
+                    //return response()->json($product);
                 return view('admin.product.index',compact('product'));
     }
 
@@ -56,6 +61,7 @@ class ProductController extends Controller
         ]);
 
         $data = array();
+        $data['user_id'] = Auth::id();
         $data['product_name'] = $request->product_name;
         $data['product_code'] = $request->product_code;
         $data['product_quantity'] = $request->product_quantity;
@@ -95,13 +101,28 @@ class ProductController extends Controller
 
             $data['image_two'] = 'public/media/product/'.$image_two_name;
             $data['image_one'] = 'public/media/product/'.$image_one_name;
+
             $product = DB::table('products')->insert($data);
-            $notification=array(
-                'messege'=>'Product Inserted Successfully',
-                'alert-type'=>'success'
-            );
-            return Redirect()->back()->with($notification);
         }
+
+        $date = date("d-m-y");
+        $random =  mt_rand(100000,999999);
+        $uniqCode = 'input-product' . '/' . Auth::id() . '/' . $date . '/' . $random;
+
+        $data = array();
+        $data['user_id'] = Auth::id();
+        $data['name_point'] = 'Completed Input Product';
+        $data['key'] = $uniqCode;
+        $data['description'] = 'Reward for completing a Input Product Admin User';
+        $data['point'] = 100;
+        $data['created_at'] = new \DateTime();
+        $point = DB ::table('points_admin')->insert($data);
+
+        $notification=array(
+            'messege'=>'Product Inserted Successfully and Get Point, Check Your Profile',
+            'alert-type'=>'success'
+        );
+        return Redirect()->route('all.product')->with($notification);
 
         // if ($image_two) {
         //     $image_two_name = hexdec(uniqid()).'.'.$image_two->getClientOriginalExtension();
@@ -211,6 +232,7 @@ class ProductController extends Controller
     public function UpdateProductWithoutPhoto(Request $request, $id){
         
         $data = array();
+        $data['user_id'] = Auth::id();
         $data['product_name'] = $request->product_name;
         $data['product_code'] = $request->product_code;
         $data['product_quantity'] = $request->product_quantity;

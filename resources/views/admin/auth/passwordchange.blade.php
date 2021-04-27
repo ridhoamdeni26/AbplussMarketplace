@@ -2,6 +2,10 @@
 
 @section('admin_content')
 
+@php
+$sumPoint = DB::table('points_admin')->where('user_id',Auth::id())->sum('point');
+@endphp
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <br />
@@ -11,7 +15,33 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-3"></div>
+                <div class="col-md-3">
+                <div class="card card-primary card-outline">
+                <div class="card-body box-profile">
+                  <div class="text-center">
+                    <img class="profile-user-img img-fluid img-circle"
+                         src="{{ asset('public/panel/assets/images/blank-profile.png') }}"
+                         alt="User profile picture">
+                  </div>
+  
+                  <h3 class="profile-username text-center">{{ Auth::user()->name }}</h3>
+  
+                  <!-- <p class="text-muted text-center">Software Engineer</p> -->
+  
+                  <ul class="list-group list-group-unbordered mb-3">
+                    <li class="list-group-item">
+                    
+                      <b>Your Point</b> <b class="float-right">
+                      {{ $sumPoint }}
+                      </b>
+                    </li>
+                  </ul>
+                  <a href="{{ route('user.logout') }}" class="btn btn-block btn-outline-info btn-sm">Logout</a>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+              </div>
                 <!-- left column -->
                 <div class="col-md-6">
                     <!-- general form elements -->

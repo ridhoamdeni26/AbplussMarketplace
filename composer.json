@@ -19,6 +19,7 @@
         "laravel/passport": "~8.3.1",
         "laravel/socialite": "^5.1",
         "laravel/tinker": "^1.0",
+        "miracuthbert/laravel-royalty": "^1.1",
         "paragonie/random_compat": "2.*"
     },
     "require-dev": {

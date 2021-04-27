@@ -7,7 +7,9 @@
             <!-- <div class="col-lg-8 offset-lg-4">
                 <iframe src="http://homepage.muda-ads.com/" width="100%" height="400px" style="border:none;"></iframe>
             </div> -->
-            <div class="banner_product_image"><img src="{{ asset('public/media/muda-ads/web.png') }}" style="height : 350px; width: auto;" alt=""></div>
+            <div class="banner_product_image">
+                <img src="{{ asset('public/media/muda-ads/web.png') }}" style="height: 350px; width: auto;" alt="">
+            </div>
             <div class="col-lg-5 offset-lg-4 fill_height">
                 <div class="banner_content">
                     <h1 class="banner_text">New Era Of OOH Advertising</h1>

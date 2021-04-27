@@ -73,8 +73,8 @@
                 </button>
             </div>
 
-            <!-- <form method="post" action="{{ route('store.blog.category') }}">
-              @csrf -->
+            <form method="post" action="{{ route('store.blog.category') }}">
+              @csrf
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Category Name English</label>

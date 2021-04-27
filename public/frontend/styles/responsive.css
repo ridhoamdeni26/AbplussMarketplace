@@ -157,7 +157,7 @@
 	}
 	.main_nav_content
 	{
-		background: #0e8ce4;
+		background: #6CB670;
 	}
 	.menu_trigger_container
 	{
@@ -325,8 +325,8 @@
 	.banner_product_image
 	{
 		opacity: 0.5;
-		width: 60vw;
-	    top: 50%;
+		width: 70vw;
+		margin: 85px;
 	    -webkit-transform: translateY(-50%);
 		-moz-transform: translateY(-50%);
 		-ms-transform: translateY(-50%);

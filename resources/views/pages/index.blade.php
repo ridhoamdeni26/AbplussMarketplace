@@ -5,6 +5,8 @@
 @include('layouts.menubar')
 @include('layouts.slider')
 
+<!-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/assets/css/chat.min.css"> -->
+
 @php
 
 $feature = DB::table('products')->where('status',1)->orderBy('id','desc')->limit(20)->get();
@@ -247,7 +249,7 @@ $hotNew = DB::table('products')->where('status',1)->where('hot_new',1)->orderBy(
 
 	<!-- Popular Categories -->
 
-	<div class="popular_categories">
+	<!-- <div class="popular_categories">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-3">
@@ -263,17 +265,17 @@ $hotNew = DB::table('products')->where('status',1)->where('hot_new',1)->orderBy(
 				
 				@php
 				$category = DB::table('categories')->get();
-				@endphp
+				@endphp -->
 				<!-- Popular Categories Slider -->
 					
-				<div class="col-lg-9">
+				<!-- <div class="col-lg-9">
 					<div class="popular_categories_slider_container">
 						<div class="owl-carousel owl-theme popular_categories_slider">
-							@foreach($category as $cat)
+							@foreach($category as $cat) -->
 							<!-- Popular Categories Item -->
-							<div class="owl-item">
+							<!-- <div class="owl-item">
 								<div class="popular_category d-flex flex-column align-items-center justify-content-center">
-									<!-- <div class="popular_category_image"><img src="{{ asset('public/frontend/images/popular_1.png') }}" alt=""></div> -->
+									<div class="popular_category_image"><img src="{{ asset('public/frontend/images/popular_1.png') }}" alt=""></div>
 									<div class="popular_category_text">{{ $cat->category_name }}</div>
 								</div>
 							</div>
@@ -283,7 +285,7 @@ $hotNew = DB::table('products')->where('status',1)->where('hot_new',1)->orderBy(
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 	<!-- Hot New Category 1 -->
 	
@@ -600,6 +602,15 @@ $hotNew = DB::table('products')->where('status',1)->where('hot_new',1)->orderBy(
 	<!-- jdn jquery -->
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js"integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
 	  crossorigin="anonymous"></script>
+	  <script>
+		function initFreshChat() {
+			window.fcWidget.init({
+			token: "3369f48d-588e-4675-9f1e-4d3127a19288",
+			host: "https://wchat.freshchat.com"
+			});
+		}
+		function initialize(i,t){var e;i.getElementById(t)?initFreshChat():((e=i.createElement("script")).id=t,e.async=!0,e.src="https://wchat.freshchat.com/js/widget.js",e.onload=initFreshChat,i.head.appendChild(e))}function initiateCall(){initialize(document,"freshchat-js-sdk")}window.addEventListener?window.addEventListener("load",initiateCall,!1):window.attachEvent("load",initiateCall,!1);
+	  </script>
 	  
 	<script type="text/javascript">
 		function productview(id){

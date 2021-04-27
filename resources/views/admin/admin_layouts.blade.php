@@ -43,6 +43,7 @@
         href="{{ asset('public/assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
     <!-- select 2 -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/plugins/voucher/voucher.css')}}">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -478,6 +479,31 @@
                             </p>
                         </a>
                     </li>
+
+                    <!-- Voucher SideBar -->
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-gift"></i>
+                            <p>
+                                Voucher
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('create.voucher') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Create Voucher</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.voucherList') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Voucher List</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     
                 </ul>
             </nav>
@@ -551,6 +577,8 @@
     <!-- mask min currency -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     
 
     <script>
@@ -570,6 +598,13 @@
             "info": true,
             "autoWidth": false,
             "responsive": true,
+        });
+
+        $('#VoucherDate').datetimepicker({
+            changeMonth: true,
+            changeYear: true,
+            format: 'DD-MM-YYYY',
+            minDate: 0
         });
 
         $('.product_size').select2({
@@ -599,6 +634,40 @@
         });
         $('#reservationyear').datetimepicker( {
             format: 'Y'
+        });
+
+        $(document).on('click', '#claimVoucher', function(e) {
+            e.preventDefault();
+            var id = $(this).data("id");
+            if(id){
+                $.ajax({
+                    url: "{{ url('admin/voucher/edit/') }}/" + id,
+                    type: "GET",
+                    datType: "json",
+                    success:function(data){
+                        console.log(data)
+                        if ($.isEmptyObject(data.error)){
+
+                            Swal.fire({
+                                title: data.success,
+                                icon: 'success',
+                                confirmButtonText: 'Cool',
+                                timer: 3000,
+                                showConfirmButton: false,
+                            })
+                        }else{
+                            Swal.fire({
+                                title: data.error,
+                                icon: 'error',
+                                confirmButtonText: 'Cool',
+                                timer: 3000,
+                                showConfirmButton: false,
+                            })
+                        }
+                    },
+				});
+            }
+
         });
     });
     </script>
@@ -749,6 +818,8 @@
 @stack('edit_blog')
 @stack('edit_duration')
 @stack('Update_Admin')
+
+</script>
 </body>
 
 </html>

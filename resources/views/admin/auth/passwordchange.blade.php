@@ -3,7 +3,11 @@
 @section('admin_content')
 
 @php
-$sumPoint = DB::table('points_admin')->where('user_id',Auth::id())->sum('point');
+$idPoint = Auth::id();
+$SumPoint = DB::table('points_admin')->where('user_id',$idPoint)->sum('point');
+$debitPoint = DB::table('claim_voucher')->where('user_id',$idPoint)->sum('debit_point');
+
+$credit_point = $SumPoint - $debitPoint;
 @endphp
 
 <!-- Content Wrapper. Contains page content -->
@@ -32,7 +36,7 @@ $sumPoint = DB::table('points_admin')->where('user_id',Auth::id())->sum('point')
                     <li class="list-group-item">
                     
                       <b>Your Point</b> <b class="float-right">
-                      {{ $sumPoint }}
+                      {{ $credit_point }}
                       </b>
                     </li>
                   </ul>

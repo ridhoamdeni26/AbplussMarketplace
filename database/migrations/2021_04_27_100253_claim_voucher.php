@@ -19,6 +19,7 @@ class ClaimVoucher extends Migration
             $table->integer('voucher_id');
             $table->date('time_used');
             $table->string('uniq_code');
+            $table->integer('debit_point');
             $table->timestamps();
             $table->softDeletes();
         });

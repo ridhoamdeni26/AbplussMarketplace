@@ -47,8 +47,7 @@ class VoucherController extends Controller
             'alert-type'=>'success'
         );
         return Redirect()->back()->with($notification);
-
-        //return response()->json($data);
+        
     }
 
     public function EditVocuher($id)
@@ -57,33 +56,32 @@ class VoucherController extends Controller
         $idPoint = Auth::id();
         $GetVocuher = DB::table('voucher_list')->where('id',$id)->first();
         $SumPoint = DB::table('points_admin')->where('user_id',$idPoint)->sum('point');
+        $debitPoint = DB::table('claim_voucher')->where('user_id',$idPoint)->sum('debit_point');
         $today = date('Y-m-d');
-
-        // $data = array();
-        // $data['user_id'] = $idPoint;
-        // $data['voucher_id'] = $id;
-        // $data['time_user'] = $today;
-        // $data['uniq_code'] = $uniq_id;
-        // $data['created_at'] = new \DateTime();
 
         $data = array([
             'user_id' => $idPoint,
             'voucher_id' => $id,
             'time_used' => $today,
             'uniq_code' => $uniq_id,
+            'debit_point' => $GetVocuher->voucher_point,
             'created_at' => new \DateTime()
         ]);
+        
+        $credit_point = $SumPoint - $debitPoint;
 
         if ($GetVocuher->date_voucher < $today){
             return \Response::json(['error' => 'Sorry For This Voucher no Longer Exists']);
         }
 
-        if($GetVocuher->voucher_point > $SumPoint){
+        if($GetVocuher->voucher_point > $credit_point){
             return \Response::json(['error' => 'Sorry, Your Points are Insufficient To Claim This Voucher']);
         }else{
             DB::table('claim_voucher')->insert($data);
             return \Response::json(['success' => 'Yeayy !! You Get New Voucher']);
         }
+
+        
         
     }
 
@@ -97,8 +95,6 @@ class VoucherController extends Controller
         $data['voucher_id'] = $request->id;
         $data['time_used'] = $request->date_voucher;
         $data['uniq_code'] = $request->uniq_code;
-
-        dd($data);
 
     }
 }
